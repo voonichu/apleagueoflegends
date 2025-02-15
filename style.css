@@ -1,0 +1,30 @@
+@font-face {
+    font-family: "TitillimWeb";
+    src: url("fonts/TitilliumWeb-Regular.ttf") format("ttf");
+    font-weight: normal;
+    font-style: normal;
+}
+
+h1 {
+    font-family: "TitillimWeb", sans-serif;
+    text-align: center;
+    color: darkblue;
+}
+
+h2 {
+    font-family: "TitillimWeb", sans-serif;
+    text-align: left;
+    color: crimson;
+}
+
+body {
+    background-color: lightcoral;
+}
+
+#choices {
+    font-family: "TitillimWeb", sans-serif;
+}
+
+input {
+
+}

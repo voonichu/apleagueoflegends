@@ -1,0 +1,82 @@
+<?php
+    function read_file($filename)
+    {
+        $champion_type = array("MAGE", "ASSASSIN", "FIGHTER", "TANK", "SUPPORT", "MARKSMAN");
+        shuffle($champion_type);
+        $answer_type = array_pop($champion_type);
+
+        $lines = file($filename);
+        shuffle($lines);
+        $choices = array();
+        while(count($choices) < 5)
+        {
+            $line = array_pop($lines);
+            list($champion, $type, $passive, $q, $w, $e, $r) = explode(";", $line);
+            if (str_contains($type, "/"))
+            {
+                list($type1, $type2) = explode(" / ", $type);
+            }
+            else
+            {
+                $type1 = $type;
+                $type2 = $type;
+            }
+
+
+            if($answer_type == $type1 || $answer_type == $type2)
+            {
+                $choices[] = $line;
+            }
+        }
+        return $choices;
+    }
+
+?>
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>AP League of Legends</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<?php
+    $choices = read_file("champion_info_modified.txt");
+    $answer_index = rand(0, count($choices) - 1);
+    $ability = rand(2, 6);
+    $ability_choice = array("Champion", "Type", "Passive", "Q", "W", "E", "R");
+    list($correct_champion, $correct_type, $correct_passive, $correct_q, $correct_w, $correct_e, $correct_r) = explode(";", $choices[$answer_index]);
+    $correct_list = array($correct_champion, $correct_type, $correct_passive, $correct_q, $correct_w, $correct_e, $correct_r);
+?>
+    <h1>AP League of Legends</h1>
+
+    <h2>What is <?= $correct_champion ?>'s <?= $ability_choice[$ability] ?></h2>
+
+
+    <form action="result.php" method="post">
+        <ol id="choices">
+            <?php
+            foreach($choices as $choice)
+            {
+                list($champion, $type, $passive, $q, $w, $e, $r) = explode(";", $choice);
+                $choice_list = array($champion, $type, $passive, $q, $w, $e, $r);
+                ?>
+            <li>
+                <label>
+                    <input type="radio" name="guess" value="<?= $choice_list[$ability] ?>"/> <?= $choice_list[$ability] ?>
+                </label>
+            </li>
+            <?php
+            }
+            ?>
+        </ol>
+        <input type="hidden" name="correct_guess" value="<?= $correct_list[$ability] ?>">
+        <input type="hidden" name="correct_name" value="<?= $correct_list[0] ?>">
+        <input type="hidden" name="ability_type" value="<?= $ability_choice[$ability] ?>">
+        <input type="submit" value="submit">
+    </form>
+</body>
+</html>
