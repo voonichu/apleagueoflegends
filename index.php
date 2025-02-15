@@ -31,6 +31,21 @@
         return $choices;
     }
 
+    $first_load = true;
+
+    $correct = false;
+
+    if (isset($_POST["guess"]))
+    {
+
+        $first_load = false;
+
+        if($_POST["guess"] == $_POST["correct_guess"])
+        {
+            $correct = true;
+        }
+    }
+
 ?>
 <!doctype html>
 <html lang="en">
@@ -56,7 +71,7 @@
     <h2>What is <?= $correct_champion ?>'s <?= $ability_choice[$ability] ?></h2>
 
 
-    <form action="result.php" method="post">
+    <form action="index.php" method="post">
         <ol id="choices">
             <?php
             foreach($choices as $choice)
@@ -78,5 +93,28 @@
         <input type="hidden" name="ability_type" value="<?= $ability_choice[$ability] ?>">
         <input type="submit" value="submit">
     </form>
+
+
+    <?php
+    if (!$first_load)
+    {
+        if ($correct)
+        {
+            ?><h1>Correct!</h1> <?php
+        }
+        else
+        {
+            ?><h1>Sorry, try again.</h1> <?php
+        }
+
+        ?>
+        <h2><?= $_POST["correct_name"] ?>'s <?= $_POST["ability_type"] ?> is</h2>
+        <h2><?= $_POST["correct_guess"] ?></h2>
+        <?php
+    }
+
+    ?>
+
+
 </body>
 </html>
