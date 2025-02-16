@@ -25,3 +25,35 @@ body {
     font-family: "TitillimWeb", sans-serif;
 }
 
+.score-info {
+    background: #f0f0f0;
+    padding: 10px;
+    border-radius: 5px;
+    margin: 10px 0;
+}
+
+.feedback {
+    padding: 10px;
+    border-radius: 5px;
+    margin: 10px 0;
+}
+
+.feedback.correct {
+    background: #dff0d8;
+    color: #3c763d;
+}
+
+.feedback.incorrect {
+    background: #f2dede;
+    color: #a94442;
+}
+
+.final-score {
+    text-align: center;
+    margin: 20px auto;
+    padding: 20px;
+    background: #f8f9fa;
+    border-radius: 8px;
+    max-width: 600px;
+}
+
